@@ -9,6 +9,7 @@ Created on 2019-03-11
 import json
 import datetime
 import requests
+import re
 # from decimal import *
 from common import log
 from common import config
@@ -107,7 +108,7 @@ class CWaterQualityBaseData(object):
             print(e)
             raise
         finally:
-            file_obj.close()
+            common.close(file_obj)
 
     def load_water_quality_information(self):
         self.log.info('load water quality information...')
@@ -116,6 +117,8 @@ class CWaterQualityBaseData(object):
             json_data = self.get_json_data_from_html(r'http://10.8.101.10:20305/api/v0.1/water_quality')
             multi_dicts = []
             if json_data is not None:
+                regex = re.compile(r'\\(?![/u"])')
+                json_data = regex.sub(r"\\\\", json_data).replace("'", '"')
                 multi_dicts = json.loads(json_data)
 
             self.pg.CreateTable_ByName('tmp_water_quality_data')
@@ -238,7 +241,7 @@ class CWaterQualityBaseData(object):
             print(e)
             raise
         finally:
-            file_obj.close()
+            common.close(file_obj)
 
     def update_related_tbl(self):
         self.log.info('update related table...')

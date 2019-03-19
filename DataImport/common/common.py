@@ -30,7 +30,7 @@ def open(file_name, mode='a+', encoding='utf8', errors='strict', buffering=1):
     return file_obj
 
 
-def close(file_obj, flag=False):
+def close(file_obj, flag=True):
     file_obj.close()
     if flag:
         try:

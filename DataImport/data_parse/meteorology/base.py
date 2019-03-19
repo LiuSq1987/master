@@ -82,7 +82,7 @@ class CMeteorologicalBaseData(object):
             self.log.error("exception happened in copy station data---%s", e)
             raise
         finally:
-            common.close(file_obj, True)
+            common.close(file_obj)
 
     def prepare(self):
         if not self.pg.IsExistTable('meteorological_element_data'):
@@ -214,7 +214,7 @@ class CMeteorologicalBaseData(object):
             self.log.error("exception happened in copy element data---%s", e)
             raise
         finally:
-            common.close(file_obj, True)
+            common.close(file_obj)
 
     def copy_forecast_data(self):
         try:
@@ -278,7 +278,7 @@ class CMeteorologicalBaseData(object):
             self.log.error("exception happened in copy forecast data---%s", e)
             raise
         finally:
-            common.close(file_obj, True)
+            common.close(file_obj)
 
     def update_related_tbl(self):
         self.log.info('update related table...')
